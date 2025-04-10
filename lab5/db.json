@@ -1,0 +1,82 @@
+{
+  "overview": [
+    {
+      "id": "1",
+      "title": "Turnover",
+      "value": "23,405",
+      "icon": "<i class='fas fa-shopping-cart'></i>",
+      "changePercent": "32.39%"
+    },
+    {
+      "id": "2",
+      "title": "Profit",
+      "value": "32,472",
+      "icon": "<i class='fa-solid fa-dollar-sign'></i>",
+      "changePercent": "1.32%"
+    },
+    {
+      "id": "3",
+      "title": "New Customers",
+      "value": 2982,
+      "icon": "<i class='fa-solid fa-user'></i>",
+      "changePercent": "7.93%"
+    }
+  ],
+
+  "table": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "company": "TechNova",
+      "orderValue": "$832",
+      "orderDate": "12/08/2023",
+      "status": "New",
+      "img": "/imgs/Avatar.png"
+    },
+    {
+      "id": "2",
+      "name": "Sophia Smith",
+      "company": "QuantumCore",
+      "orderValue": "$923",
+      "orderDate": "20/07/2023",
+      "status": "New",
+      "img": "/imgs/Avatar (1).png"
+    },
+    {
+      "id": "3",
+      "name": "Oliver Johnson",
+      "company": "BlueWave Networks",
+      "orderValue": "$732",
+      "orderDate": "14/09/2023",
+      "status": "In-progress",
+      "img": "/imgs/Avatar (2).png"
+    },
+    {
+      "id": "4",
+      "name": "Ava Williams",
+      "company": "TechFusion Solutions",
+      "orderValue": "$856",
+      "orderDate": "22/08/2023",
+      "status": "In-progress",
+      "img": "/imgs/Avatar (3).png"
+    },
+    {
+      "id": "5",
+      "name": "Liam Brown",
+      "company": "DataByte Technologies",
+      "orderValue": "$983",
+      "orderDate": "05/04/2023",
+      "status": "Completed",
+      "img": "/imgs/Avatar (4).png"
+    },
+    {
+      "id": "6",
+      "name": "Emma Davis",
+      "company": "NetCore Solutions",
+      "orderValue": "$1,045",
+      "orderDate": "28/05/2023",
+      "status": "Completed",
+      "img": "/imgs/Avatar (5).png"
+    }
+  ]
+}

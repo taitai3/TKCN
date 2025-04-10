@@ -1,7 +1,7 @@
 import Sidebar from "./sidebar";
 import Header from "./header";
 import Footer from "./footer";
-
+import Dashboard from "./dashboard"
 export default function GridLayout() {
     return (
         <div className="flex h-screen">
@@ -12,7 +12,7 @@ export default function GridLayout() {
                 <Header />
 
                 <main className="flex-1 bg-gray-50 p-4 overflow-auto">
-
+                    <Dashboard/>
                 </main>
 
                 <Footer />
