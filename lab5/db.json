@@ -6,7 +6,6 @@
       "value": "23,405",
       "icon": "<i class='fas fa-shopping-cart'></i>",
       "changePercent": "32.39%"
-      
     },
     {
       "id": "2",
@@ -14,7 +13,6 @@
       "value": "32,472",
       "icon": "<i class='fa-solid fa-dollar-sign'></i>",
       "changePercent": "1.32%"
-      
     },
     {
       "id": "3",
@@ -22,7 +20,6 @@
       "value": 2982,
       "icon": "<i class='fa-solid fa-user'></i>",
       "changePercent": "7.93%"
-      
     }
   ],
   "table": [
@@ -34,7 +31,6 @@
       "orderDate": "12/08/2023",
       "status": "New",
       "img": "/imgs/Avatar.png"
-      
     },
     {
       "id": "2",

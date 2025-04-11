@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import iconSquare from "/imgs/Squares four 1.png";
 import iconImport from "/imgs/Download.png";
 import iconExport from "/imgs/Move up.png";
-
+import { PencilIcon } from '@heroicons/react/24/solid';
 
 const fetchData = async (url) => {
     try {
@@ -17,7 +17,9 @@ const fetchData = async (url) => {
 const dashboard = () => {
     const [overviewData, setOverviewData] = useState([]);
     const [reportData, setReportData] = useState([]);
-
+    const [modalOpen, setModalOpen] = useState(false);
+    const [currentItem, setCurrentItem] = useState(null);
+    const [isCreatingNew, setIsCreatingNew] = useState(false);
 
     // Lấy dữ liệu tổng quan
     useEffect(() => {
@@ -39,6 +41,11 @@ const dashboard = () => {
         loadReportData();
     }, []);
 
+    const handleEdit = (item) => {
+        setCurrentItem(item);
+        setIsCreatingNew(false);
+        setModalOpen(true);
+    };
 
 
     return (
@@ -64,8 +71,8 @@ const dashboard = () => {
                         ))}
                     </ul>
                 </div>
-               
-               
+
+
                 <div>
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center text-lg font-semibold text-gray-800">
@@ -121,7 +128,7 @@ const dashboard = () => {
                                         </td>
                                         <td className="p-3">
                                             <button onClick={() => handleEdit(item)} className="text-blue-500 hover:text-blue-700">
-                                                <i className="fa fa-pen"></i>
+                                            <PencilIcon className="w-5 h-5" />
                                             </button>
                                         </td>
                                     </tr>
@@ -130,6 +137,52 @@ const dashboard = () => {
                         </table>
                     </div>
                 </div>
+                
+                {modalOpen && currentItem && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                        <div className="bg-white p-6 rounded-lg w-[400px] space-y-4 shadow-xl">
+                            <h2 className="text-lg font-semibold">{isCreatingNew ? "Thêm Mới" : "Chỉnh Sửa"}</h2>
+                            <div className="space-y-2">
+                                <label className="block">
+                                    Customer name
+                                    <input type="text" name="name" value={currentItem.name} className="w-full mt-1 p-2 border rounded" />
+                                </label>
+                                <label className="block">
+                                    Company
+                                    <input type="text" name="company" value={currentItem.company}className="w-full mt-1 p-2 border rounded" />
+                                </label>
+                                <label className="block">
+                                    Order Value
+                                    <input type="text" name="orderValue" value={currentItem.orderValue} className="w-full mt-1 p-2 border rounded" />
+                                </label>
+                                <label className="block">
+                                    Order date
+                                    <input type="date" name="orderDate" value={currentItem.orderDate} className="w-full mt-1 p-2 border rounded" />
+                                </label>
+                                <label className="block">
+                                    Status
+                                    <select name="status" value={currentItem.status} className="w-full mt-1 p-2 border rounded">
+                                        <option value="Hoàn Thành">Completed</option>
+                                        <option value="Chờ Xử Lý">In-progress</option>
+                                        <option value="Hủy">New</option>
+                                    </select>
+                                </label>
+                                <label className="block">
+                                    Avatar:
+                                    <input type="file" accept="image/*" className="w-full mt-1 p-2" />
+                                </label>
+                            </div>
+                            <div className="flex justify-end gap-2 pt-4">
+                                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                    Lưu
+                                </button>
+                                <button className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+                                    Hủy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
 
