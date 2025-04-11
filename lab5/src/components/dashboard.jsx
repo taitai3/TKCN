@@ -46,7 +46,39 @@ const dashboard = () => {
         setIsCreatingNew(false);
         setModalOpen(true);
     };
+    const handleInputChange = (e) => {
+        const { name, value, type, files } = e.target;
+        if (type === "file" && files.length > 0) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setCurrentItem((prev) => ({ ...prev, img: reader.result }));
+            };
+            reader.readAsDataURL(files[0]);
+        } else {
+            setCurrentItem((prev) => ({ ...prev, [name]: value }));
+        }
+    };
 
+    // Lưu dữ liệu (tạo mới hoặc cập nhật)
+    const handleSave = async () => {
+        const method = isCreatingNew ? "POST" : "PUT";
+        const url = isCreatingNew ? "http://localhost:3000/table" : `http://localhost:3000/table/${currentItem.id}`;
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(currentItem),
+            });
+            const savedItem = await response.json();
+            setReportData((prev) =>
+                isCreatingNew ? [...prev, savedItem] : prev.map((item) => (item.id === savedItem.id ? savedItem : item))
+            );
+            setModalOpen(false);
+        } catch (error) {
+            console.error("Save failed:", error);
+        }
+    };
 
     return (
         <>
@@ -139,50 +171,50 @@ const dashboard = () => {
                 </div>
                 
                 {modalOpen && currentItem && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="bg-white p-6 rounded-lg w-[400px] space-y-4 shadow-xl">
-                            <h2 className="text-lg font-semibold">{isCreatingNew ? "Thêm Mới" : "Chỉnh Sửa"}</h2>
-                            <div className="space-y-2">
-                                <label className="block">
-                                    Customer name
-                                    <input type="text" name="name" value={currentItem.name} className="w-full mt-1 p-2 border rounded" />
-                                </label>
-                                <label className="block">
-                                    Company
-                                    <input type="text" name="company" value={currentItem.company}className="w-full mt-1 p-2 border rounded" />
-                                </label>
-                                <label className="block">
-                                    Order Value
-                                    <input type="text" name="orderValue" value={currentItem.orderValue} className="w-full mt-1 p-2 border rounded" />
-                                </label>
-                                <label className="block">
-                                    Order date
-                                    <input type="date" name="orderDate" value={currentItem.orderDate} className="w-full mt-1 p-2 border rounded" />
-                                </label>
-                                <label className="block">
-                                    Status
-                                    <select name="status" value={currentItem.status} className="w-full mt-1 p-2 border rounded">
-                                        <option value="Hoàn Thành">Completed</option>
-                                        <option value="Chờ Xử Lý">In-progress</option>
-                                        <option value="Hủy">New</option>
-                                    </select>
-                                </label>
-                                <label className="block">
-                                    Avatar:
-                                    <input type="file" accept="image/*" className="w-full mt-1 p-2" />
-                                </label>
-                            </div>
-                            <div className="flex justify-end gap-2 pt-4">
-                                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                    Lưu
-                                </button>
-                                <button className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
-                                    Hủy
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg w-[400px] space-y-4 shadow-xl">
+                <h2 className="text-lg font-semibold">{isCreatingNew ? "Thêm Mới" : "Chỉnh Sửa"}</h2>
+                <div className="space-y-2">
+                  <label className="block">
+                    Customer name
+                    <input type="text" name="name" value={currentItem.name} onChange={handleInputChange} className="w-full mt-1 p-2 border rounded" />
+                  </label>
+                  <label className="block">
+                    Company
+                    <input type="text" name="company" value={currentItem.company} onChange={handleInputChange} className="w-full mt-1 p-2 border rounded" />
+                  </label>
+                  <label className="block">
+                    Order Value
+                    <input type="text" name="orderValue" value={currentItem.orderValue} onChange={handleInputChange} className="w-full mt-1 p-2 border rounded" />
+                  </label>
+                  <label className="block">
+                    Order date
+                    <input type="date" name="orderDate" value={currentItem.orderDate} onChange={handleInputChange} className="w-full mt-1 p-2 border rounded" />
+                  </label>
+                  <label className="block">
+                    Status
+                    <select name="status" value={currentItem.status} onChange={handleInputChange} className="w-full mt-1 p-2 border rounded">
+                      <option value="Hoàn Thành">Hoàn Thành</option>
+                      <option value="Chờ Xử Lý">Chờ Xử Lý</option>
+                      <option value="Hủy">Hủy</option>
+                    </select>
+                  </label>
+                  <label className="block">
+                    Avatar:
+                    <input type="file" accept="image/*" onChange={handleInputChange} className="w-full mt-1 p-2" />
+                  </label>
+                </div>
+                <div className="flex justify-end gap-2 pt-4">
+                  <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Lưu
+                  </button>
+                  <button onClick={() => setModalOpen(false)} className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+                    Hủy
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
             </div>
         </>
 
