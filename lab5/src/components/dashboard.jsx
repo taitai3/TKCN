@@ -64,7 +64,72 @@ const dashboard = () => {
                         ))}
                     </ul>
                 </div>
-                
+               
+               
+                <div>
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center text-lg font-semibold text-gray-800">
+                            <img src={iconSquare} alt="Icon Báo Cáo" className="w-5 h-5 mr-2" />
+                            Detail report
+                        </div>
+                        <div className="space-x-2">
+                            <button
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-rose-300 bg-rose-50 text-rose-500 hover:bg-rose-100 transition"
+                                onClick={() => {
+                                    setCurrentItem({ name: "", company: "", orderValue: "", orderDate: "", status: "", img: "" });
+                                    setIsCreatingNew(true);
+                                    setModalOpen(true);
+                                }}
+                            >
+                                <img src={iconImport} alt="Nhập" className="w-4 h-4" />
+                                Nhập
+                            </button>
+                            <button
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-rose-300 bg-rose-50 text-rose-500 hover:bg-rose-100 transition">
+                                <img src={iconExport} alt="Xuất" className="w-4 h-4" />
+                                Xuất
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto bg-white shadow-md rounded-xl">
+                        <table className="min-w-full table-auto text-sm text-gray-800">
+                            <thead className="bg-gray-100 text-left">
+                                <tr>
+                                    <th className="p-3"><input type="checkbox" /></th>
+                                    <th className="p-3">Customer Name</th>
+                                    <th className="p-3">Company</th>
+                                    <th className="p-3">Order value</th>
+                                    <th className="p-3">Order Date</th>
+                                    <th className="p-3">Status</th>
+                                    <th className="p-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reportData.map((item) => (
+                                    <tr key={item.id} className="border-t">
+                                        <td className="p-3"><input type="checkbox" /></td>
+                                        <td className="p-3 flex items-center gap-2">
+                                            {item.img && <img src={item.img} alt="Avatar" className="w-8 h-8 rounded-full" />}
+                                            {item.name}
+                                        </td>
+                                        <td className="p-3">{item.company}</td>
+                                        <td className="p-3">{item.orderValue}</td>
+                                        <td className="p-3">{item.orderDate}</td>
+                                        <td className={`p-3 ${item.status === "Hoàn Thành" ? "text-green-600" : item.status === "Hủy" ? "text-red-600" : "text-yellow-500"}`}>
+                                            {item.status}
+                                        </td>
+                                        <td className="p-3">
+                                            <button onClick={() => handleEdit(item)} className="text-blue-500 hover:text-blue-700">
+                                                <i className="fa fa-pen"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </>
 
